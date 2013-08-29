@@ -100,7 +100,7 @@ require(["jquery_cookie"], function() {
             jQuery("input[name='networkAAddressCountry']").val(physicalLocInfo[2]);
             jQuery("input[name='networkAAddressName']").val(physicalLocInfo[3]);
             updateConfig();
-        });
+        })
         
         // VER 66699 - Lock network address fields so that user cannot type in any data
         // Currently we display networkAAddress attribute if there is a constraint error (so that we do not get internal constraint error)
@@ -134,10 +134,13 @@ require(["jquery_cookie"], function() {
             var data = jQuery(this).children('option:selected').val();
             var LocationAInfo = data.split("!$!");
 
-            alert('The assignLocationPairLocA Function was reached');
+            alert('**** The assignLocationPairLocA Function was reached ****');
+            alert('assignLocationPairLocA>> locationAInfo:' + LocationAInfo);
             
             jQuery("input[name='ctlLocationPairLocASFDCIDString']").val(physicalLocInfo[0]);
             jQuery("input[name='ctlLocationPairLocAString'], textarea[name='ctlLocationPairLocAString']").val(physicalLocInfo[1]);
+            //alert('***** IN assignLocationPairA ********');
+            //alert('assignLocationPairLocA>> ctlLocationPairLocAString:' + physicalLocInfo[1]);
             updateConfig();
         })
         
@@ -170,9 +173,9 @@ require(["jquery_cookie"], function() {
 
         jQuery("#ctlLocationPairLocZHTML").children("select").change( function(){
             var data = jQuery(this).children('option:selected').val();
-            var LocationAInfo = data.split("!$!");
+            var LocationZInfo = data.split("!$!");
 
-            alert('The assignLocationPairLocZ Function was reached');
+            alert('**** The assignLocationPairLocZ Function was reached ****');
             
             jQuery("input[name='ctlLocationPairLocZSFDCIDString']").val(physicalLocInfo[0]);
             jQuery("input[name='ctlLocationPairLocZString'], textarea[name='ctlLocationPairLocZString']").val(physicalLocInfo[1]);
