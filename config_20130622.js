@@ -12,6 +12,7 @@
  * 05/21/13 SKharche BIGMACH-2001 - CTL code reconciliation
  * 08/07/13 RConaghan US 1465  - Added Code for Popup Window functionality in HTML Array Transformations
  * 08/29/13 WHaverhals US1780   - Add code to deal with A and Z Location selection
+ * 
 **/
  
 /*global require */
@@ -132,15 +133,13 @@ require(["jquery_cookie"], function() {
 
         jQuery("#ctlLocationPairLocAHTML").children("select").change( function(){
             var data = jQuery(this).children('option:selected').val();
-            var LocationAInfo = data.split("!$!");
+            var locationAInfo = data.split("!$!");
 
-            alert('**** The assignLocationPairLocA Function was reached ****');
-            alert('assignLocationPairLocA>> locationAInfo:' + LocationAInfo);
+            // alert('**** The assignLocationPairLocA Function was reached ****');
+            // alert('assignLocationPairLocA>> locationAInfo[1]:' + locationAInfo[1]);
             
-            jQuery("input[name='ctlLocationPairLocASFDCIDString']").val(physicalLocInfo[0]);
-            jQuery("input[name='ctlLocationPairLocAString'], textarea[name='ctlLocationPairLocAString']").val(physicalLocInfo[1]);
-            //alert('***** IN assignLocationPairA ********');
-            //alert('assignLocationPairLocA>> ctlLocationPairLocAString:' + physicalLocInfo[1]);
+            jQuery("input[name='ctlLocationPairLocASFDCIDString']").val(locationAInfo[0]);
+            jQuery("input[name='ctlLocationPairLocAString'], textarea[name='ctlLocationPairLocAString']").val(locationAInfo[1]);
             updateConfig();
         })
         
@@ -165,20 +164,20 @@ require(["jquery_cookie"], function() {
         
     }
    /*
-    * Function to set Location Pair A Location
-    * This function pulls in the parameters for the selected Location A value and sets the appropriate attributes.
+    * Function to set Location Pair Z Location
+    * This function pulls in the parameters for the selected Location Z value and sets the appropriate attributes.
     * The value parameter string is formatted as follows: <SFDC Location ID>!$!<SFDC Location Name>  
     */
     function assignLocationPairLocZ(){
 
         jQuery("#ctlLocationPairLocZHTML").children("select").change( function(){
             var data = jQuery(this).children('option:selected').val();
-            var LocationZInfo = data.split("!$!");
+            var locationZInfo = data.split("!$!");
 
-            alert('**** The assignLocationPairLocZ Function was reached ****');
+            //alert('**** The assignLocationPairLocZ Function was reached ****');
             
-            jQuery("input[name='ctlLocationPairLocZSFDCIDString']").val(physicalLocInfo[0]);
-            jQuery("input[name='ctlLocationPairLocZString'], textarea[name='ctlLocationPairLocZString']").val(physicalLocInfo[1]);
+            jQuery("input[name='ctlLocationPairLocZSFDCIDString']").val(locationZInfo[0]);
+            jQuery("input[name='ctlLocationPairLocZString'], textarea[name='ctlLocationPairLocZString']").val(locationZInfo[1]);
             updateConfig();
         })
         
