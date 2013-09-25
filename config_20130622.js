@@ -1,17 +1,17 @@
 /**
  * Change Log
- * 12/19/12 SKharche VER 65650 - Group Name and Unique Name in Config  
- * 12/19/12 SKharche VER 65624 - Support Line Level Address Info & Fix Pricing
- * 02/27/13 SKharche VER 66336 - Display config comment under manadatory item's comment column
- * 03/08/13 SKharche VER 66412 - Javascript to support unified computing
- * 04/08/13 SKharche VER 66699 - Lock network address fields so that user cannot type in any data
- * 04/23/13 SKharhce VER 66870 - CTL Code Reconciliation
- *          RConaghan US 871   - Javascript to perform HTML transformations
- *          RConaghan US 371   - Reselecting Service Locations on the Oppty
- * 05/09/13 SKharche VER 67036 - Populate bmiNodeName with APACHE_LB_NODE
- * 05/21/13 SKharche BIGMACH-2001 - CTL code reconciliation
- * 08/07/13 RConaghan US 1465  - Added Code for Popup Window functionality in HTML Array Transformations
- * 08/29/13 WHaverhals US1780   - Add code to deal with A and Z Location selection
+ * 12/19/12 SKharche    VER 65650       - Group Name and Unique Name in Config  
+ * 12/19/12 SKharche    VER 65624       - Support Line Level Address Info & Fix Pricing
+ * 02/27/13 SKharche    VER 66336       - Display config comment under manadatory item's comment column
+ * 03/08/13 SKharche    VER 66412       - Javascript to support unified computing
+ * 04/08/13 SKharche    VER 66699       - Lock network address fields so that user cannot type in any data
+ * 04/23/13 SKharhce    VER 66870       - CTL Code Reconciliation
+ *          RConaghan   US 871          - Javascript to perform HTML transformations
+ *          RConaghan   US 371          - Reselecting Service Locations on the Oppty
+ * 05/09/13 SKharche    VER 67036       - Populate bmiNodeName with APACHE_LB_NODE
+ * 05/21/13 SKharche    BIGMACH-2001    - CTL code reconciliation
+ * 08/07/13 RConaghan   US 1465         - Added Code for Popup Window functionality in HTML Array Transformations
+ * 08/29/13 WHaverhals  US1830          - Added code to support CenturyLink A and Z Location in E-Line Model
  * 
 **/
  
@@ -143,26 +143,25 @@ require(["jquery_cookie"], function() {
             updateConfig();
         })
         
-        // VER 66699 - Lock network address fields so that user cannot type in any data
+        // Lock network address fields so that user cannot type in any data
         // Currently we display networkAAddress attribute if there is a constraint error (so that we do not get internal constraint error)
         // Once the attribute is displayed, user can type in any data into it which should be prevented
         if(jQuery("#ctlLocationPairLocAString").is(":visible")) {
             aLocation = document.getElementById('ctlLocationPairLocAString');
             aLocation.setAttribute('readonly', 'readonly');
         }
-        
         /*
-        * The below section runs on every page load and defaults the HTML attribute to the user selected option
-        * The reason it is present in this function is becasue it is related to this functionality
-        selectedLocation = jQuery("input[name='ctlLocationPairLocAString'], textarea[name='ctlLocationPairLocAString']").val();
-        jQuery("#addressSiteA").find("option:contains(" + selecedAddress + ")").each(function(){
-          if( jQuery(this).text() == selecedAddress ) {
-            jQuery(this).attr("selected","selected");
-          }
-        });
-        */
-        
+         * The below section runs on every page load and defaults the HTML attribute to the user selected option
+         * The reason it is present in this function is becasue it is related to this functionality
+         */
+         selectedALocation = jQuery("input[name='ctlLocationPairLocAString'], textarea[name='ctlLocationPairLocAString']").val();
+         jQuery("#nameLocPairLocationA").find("option:contains(" + selectedALocation + ")").each(function(){
+             if( jQuery(this).text() == selectedALocation ) {
+                 jQuery(this).attr("selected","selected");
+             }
+         });       
     }
+    
    /*
     * Function to set Location Pair Z Location
     * This function pulls in the parameters for the selected Location Z value and sets the appropriate attributes.
@@ -190,15 +189,15 @@ require(["jquery_cookie"], function() {
         }
         
         /*
-        * The below section runs on every page load and defaults the HTML attribute to the user selected option
-        * The reason it is present in this function is becasue it is related to this functionality
-        selectedLocation = jQuery("input[name='ctlLocationPairLocAString'], textarea[name='ctlLocationPairLocAString']").val();
-        jQuery("#addressSiteA").find("option:contains(" + selecedAddress + ")").each(function(){
-          if( jQuery(this).text() == selecedAddress ) {
-            jQuery(this).attr("selected","selected");
-          }
-        });
-        */
+         * The below section runs on every page load and defaults the HTML attribute to the user selected option
+         * The reason it is present in this function is becasue it is related to its functionality
+         */
+         selectedZLocation = jQuery("input[name='ctlLocationPairLocZString'], textarea[name='ctlLocationPairLocZString']").val();
+         jQuery("#nameLocPairLocationZ").find("option:contains(" + selectedZLocation + ")").each(function(){
+             if( jQuery(this).text() == selectedZLocation ) {
+                 jQuery(this).attr("selected","selected");
+             }
+         });       
         
     }
     /*
