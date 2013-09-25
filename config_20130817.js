@@ -12,7 +12,9 @@
  * 05/21/13 SKharche  BIGMACH-2001 - CTL code reconciliation
  * 08/06/13 SKharche  BIGMACH-2347 - CTL code reconciliation
  * 08/06/13 RConaghan US 1465      - Added Code for Popup Window functionality in HTML Array Transformations
-**/
+ * 08/29/13 WHaverhals  US1830          - Added code to support CenturyLink A and Z Location in E-Line Model
+ *
+ ***/
  
 /*global require */
 
@@ -42,9 +44,10 @@ require(["jquery_cookie"], function() {
         getAddressInfo();
         showConfigComment();
         showWindowPopups();
-        arrayAttrHtmlTransform();
-        
+        arrayAttrHtmlTransform();        
         populateBMINodeName();
+        assignLocationPairLocA();
+        assignLocationPairLocZ();
     });
     
     /*
@@ -120,7 +123,88 @@ require(["jquery_cookie"], function() {
           }
         });
     }
+
+    /*
+     * <<<WJH 28-AUG-2013 START
+     * Function to set Location Pair A Location
+     * This function pulls in the parameters for the selected Location A value and sets the appropriate attributes.
+     * The value parameter string is formatted as follows: <SFDC Location ID>!$!<SFDC Location Name>  
+     */
+    function assignLocationPairLocA(){
+
+        jQuery("#ctlLocationPairLocAHTML").children("select").change( function(){
+            var data = jQuery(this).children('option:selected').val();
+            var locationAInfo = data.split("!$!");
+
+            // alert('**** The assignLocationPairLocA Function was reached ****');
+            // alert('assignLocationPairLocA>> locationAInfo[1]:' + locationAInfo[1]);
+            
+            jQuery("input[name='ctlLocationPairLocASFDCIDString']").val(locationAInfo[0]);
+            jQuery("input[name='ctlLocationPairLocAString'], textarea[name='ctlLocationPairLocAString']").val(locationAInfo[1]);
+            updateConfig();
+        })
+        
+        // Lock network address fields so that user cannot type in any data
+        // Currently we display networkAAddress attribute if there is a constraint error (so that we do not get internal constraint error)
+        // Once the attribute is displayed, user can type in any data into it which should be prevented
+        if(jQuery("#ctlLocationPairLocAString").is(":visible")) {
+            aLocation = document.getElementById('ctlLocationPairLocAString');
+            aLocation.setAttribute('readonly', 'readonly');
+        }
+        /*
+         * The below section runs on every page load and defaults the HTML attribute to the user selected option
+         * The reason it is present in this function is becasue it is related to this functionality
+         */
+         selectedALocation = jQuery("input[name='ctlLocationPairLocAString'], textarea[name='ctlLocationPairLocAString']").val();
+         jQuery("#nameLocPairLocationA").find("option:contains(" + selectedALocation + ")").each(function(){
+             if( jQuery(this).text() == selectedALocation ) {
+                 jQuery(this).attr("selected","selected");
+             }
+         });       
+    }
     
+   /*
+    * Function to set Location Pair Z Location
+    * This function pulls in the parameters for the selected Location Z value and sets the appropriate attributes.
+    * The value parameter string is formatted as follows: <SFDC Location ID>!$!<SFDC Location Name>  
+    */
+    function assignLocationPairLocZ(){
+
+        jQuery("#ctlLocationPairLocZHTML").children("select").change( function(){
+            var data = jQuery(this).children('option:selected').val();
+            var locationZInfo = data.split("!$!");
+
+            //alert('**** The assignLocationPairLocZ Function was reached ****');
+            
+            jQuery("input[name='ctlLocationPairLocZSFDCIDString']").val(locationZInfo[0]);
+            jQuery("input[name='ctlLocationPairLocZString'], textarea[name='ctlLocationPairLocZString']").val(locationZInfo[1]);
+            updateConfig();
+        })
+        
+        // VER 66699 - Lock network address fields so that user cannot type in any data
+        // Currently we display networkAAddress attribute if there is a constraint error (so that we do not get internal constraint error)
+        // Once the attribute is displayed, user can type in any data into it which should be prevented
+        if(jQuery("#ctlLocationPairLocZString").is(":visible")) {
+            aLocation = document.getElementById('ctlLocationPairLocZString');
+            aLocation.setAttribute('readonly', 'readonly');
+        }
+        
+        /*
+         * The below section runs on every page load and defaults the HTML attribute to the user selected option
+         * The reason it is present in this function is becasue it is related to its functionality
+         */
+         selectedZLocation = jQuery("input[name='ctlLocationPairLocZString'], textarea[name='ctlLocationPairLocZString']").val();
+         jQuery("#nameLocPairLocationZ").find("option:contains(" + selectedZLocation + ")").each(function(){
+             if( jQuery(this).text() == selectedZLocation ) {
+                 jQuery(this).attr("selected","selected");
+             }
+         });       
+        
+    }
+    /*
+     * WJH 28-AUG-2013 END>>>
+    */
+        
     /*
     * Function to set primary network resiliency
     */
